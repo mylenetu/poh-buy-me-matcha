@@ -14,18 +14,22 @@ export default async (req, res) => {
       });
     }
 
+    console.log(1);
     const timestamp = ethers.utils.hexZeroPad(
       ethers.utils.hexlify(Math.floor(new Date(challenge_ts).getTime() / 1000)),
       4
     );
 
+    console.log(2);
     const hash = ethers.utils.keccak256(
       ethers.utils.hexConcat([data, timestamp])
     );
+    console.log(3);
     const validatorSignature = await wallet.signMessage(
       ethers.utils.arrayify(hash)
     );
 
+    console.log(4);
     const proof = ethers.utils.hexConcat([data, timestamp, validatorSignature]);
 
     res.status(200).json({ proof, timestamp: challenge_ts });
