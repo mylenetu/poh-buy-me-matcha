@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import ethers from "ethers";
-import hcaptcha from "hcaptcha";
+const ethers = require("ethers");
+const hcaptcha = require("hcaptcha");
 
 export default async (req, res) => {
   try {
