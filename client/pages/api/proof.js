@@ -1,6 +1,7 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 const ethers = require("ethers");
 const hcaptcha = require("hcaptcha");
+
+const wallet = new ethers.Wallet(process.env.VALIDATOR_KEY);
 
 export default async (req, res) => {
   try {
@@ -14,18 +15,14 @@ export default async (req, res) => {
       });
     }
 
-    console.log(1);
-    console.log(ethers);
     const timestamp = ethers.utils.hexZeroPad(
       ethers.utils.hexlify(Math.floor(new Date(challenge_ts).getTime() / 1000)),
       4
     );
 
-    console.log(2);
     const hash = ethers.utils.keccak256(
       ethers.utils.hexConcat([data, timestamp])
     );
-    console.log(3);
     const validatorSignature = await wallet.signMessage(
       ethers.utils.arrayify(hash)
     );
