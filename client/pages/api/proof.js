@@ -1,8 +1,6 @@
 const ethers = require("ethers");
 const hcaptcha = require("hcaptcha");
 
-const wallet = new ethers.Wallet(process.env.VALIDATOR_KEY);
-
 export default async (req, res) => {
   try {
     const { data, token } = req.body;
@@ -24,6 +22,9 @@ export default async (req, res) => {
       ethers.utils.hexConcat([data, timestamp])
     );
     console.log("beofre");
+
+    console.log(process.env.VALIDATOR_KEY);
+    const wallet = new ethers.Wallet(process.env.VALIDATOR_KEY);
     const validatorSignature = await wallet.signMessage(
       ethers.utils.arrayify(hash)
     );
