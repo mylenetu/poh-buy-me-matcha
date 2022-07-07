@@ -2,13 +2,14 @@
 
 export default async (req, res) => {
   try {
-    console.log('here');
     const { data, token } = req.body;
     const result = await hcaptcha.verify(process.env.HCAPTCHA_SECRET, token);
     const { success, challenge_ts } = result;
     if (!success) {
-      res.sendStatus(400);
-      return;
+      res.status(400).send({
+        message: "failed challenge",
+        extra: result,
+      });
     }
 
     const timestamp = ethers.utils.hexZeroPad(
