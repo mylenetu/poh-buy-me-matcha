@@ -23,12 +23,15 @@ export default async (req, res) => {
     const hash = ethers.utils.keccak256(
       ethers.utils.hexConcat([data, timestamp])
     );
+    console.log("beofre");
     const validatorSignature = await wallet.signMessage(
       ethers.utils.arrayify(hash)
     );
+    console.log("after");
 
-    console.log(4);
+    console.log(1);
     const proof = ethers.utils.hexConcat([data, timestamp, validatorSignature]);
+    console.log(2);
 
     res.status(200).json({ proof, timestamp: challenge_ts });
   } catch (error) {
