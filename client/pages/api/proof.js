@@ -30,6 +30,7 @@ export default async (req, res) => {
 
     res.status(200).json({ proof, timestamp: challenge_ts });
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       message: "something went wrong",
       error,
