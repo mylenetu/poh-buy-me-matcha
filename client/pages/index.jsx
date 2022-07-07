@@ -1,25 +1,25 @@
-import abi from '../utils/BuyMeAMatcha.json';
-import { ethers } from 'ethers';
-import Head from 'next/head';
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import styles from '../styles/Home.module.css';
+import abi from "../utils/BuyMeAMatcha.json";
+import { ethers } from "ethers";
+import Head from "next/head";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import styles from "../styles/Home.module.css";
 // import MATCHA from '../assets/matcha.png';
 
 //============= PROOF OF HUMANITY =============
-import { useProofOfHumanity } from 'poh-react';
-import HCaptchaValidator from 'poh-validator-hcaptcha-react';
+import { useProofOfHumanity } from "poh-react";
+import HCaptchaValidator from "poh-validator-hcaptcha-react";
 //=============================================
 
 export default function Home() {
   // Contract Address & ABI
-  const contractAddress = '0xEc15dFA2caa8C878311a4F696da89E23d5A151bC';
+  const contractAddress = "0x14810D97514dfc3cE0BfAbAC4d3FbD649807AEEB";
   const contractABI = abi.abi;
 
   // Component state
-  const [currentAccount, setCurrentAccount] = useState('');
-  const [name, setName] = useState('');
-  const [message, setMessage] = useState('');
+  const [currentAccount, setCurrentAccount] = useState("");
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
   const [memos, setMemos] = useState([]);
 
   const onNameChange = (event) => {
@@ -45,17 +45,17 @@ export default function Home() {
     try {
       const { ethereum } = window;
 
-      const accounts = await ethereum.request({ method: 'eth_accounts' });
-      console.log('accounts: ', accounts);
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+      console.log("accounts: ", accounts);
 
       if (accounts.length > 0) {
         const account = accounts[0];
-        console.log('wallet is connected! ' + account);
+        console.log("wallet is connected! " + account);
       } else {
-        console.log('make sure MetaMask is connected');
+        console.log("make sure MetaMask is connected");
       }
     } catch (error) {
-      console.log('error: ', error);
+      console.log("error: ", error);
     }
   };
 
@@ -64,11 +64,11 @@ export default function Home() {
       const { ethereum } = window;
 
       if (!ethereum) {
-        console.log('please install MetaMask');
+        console.log("please install MetaMask");
       }
 
       const accounts = await ethereum.request({
-        method: 'eth_requestAccounts',
+        method: "eth_requestAccounts",
       });
 
       setCurrentAccount(accounts[0]);
@@ -91,7 +91,7 @@ export default function Home() {
       const { ethereum } = window;
 
       if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum, 'any');
+        const provider = new ethers.providers.Web3Provider(ethereum, "any");
         const signer = provider.getSigner();
         const buyMeAMatcha = new ethers.Contract(
           contractAddress,
@@ -99,24 +99,24 @@ export default function Home() {
           signer
         );
 
-        console.log('buying matcha..');
+        console.log("buying matcha..");
         // This line below is how we actually run the function
         const matchaTxn = await buyMeAMatcha.buyMatcha(
-          name ? name : 'anon',
-          message ? message : 'Enjoy your matcha!',
+          name ? name : "anon",
+          message ? message : "Enjoy your matcha!",
           proof,
-          { value: ethers.utils.parseEther('0.001') }
+          { value: ethers.utils.parseEther("0.001") }
         );
 
         await matchaTxn.wait();
 
-        console.log('mined ', matchaTxn.hash);
+        console.log("mined ", matchaTxn.hash);
 
-        console.log('matcha purchased!');
+        console.log("matcha purchased!");
 
         // Clear the form fields.
-        setName('');
-        setMessage('');
+        setName("");
+        setMessage("");
       }
     } catch (error) {
       console.log(error);
@@ -136,12 +136,12 @@ export default function Home() {
           signer
         );
 
-        console.log('fetching memos from the blockchain..');
+        console.log("fetching memos from the blockchain..");
         const memos = await buyMeAMatcha.getMemos();
-        console.log('fetched!');
+        console.log("fetched!");
         setMemos(memos);
       } else {
-        console.log('Metamask is not connected');
+        console.log("Metamask is not connected");
       }
     } catch (error) {
       console.log(error);
@@ -156,7 +156,7 @@ export default function Home() {
     // Create an event handler function for when someone sends
     // us a new memo.
     const onNewMemo = (from, timestamp, name, message) => {
-      console.log('Memo received: ', from, timestamp, name, message);
+      console.log("Memo received: ", from, timestamp, name, message);
       setMemos((prevState) => [
         ...prevState,
         {
@@ -172,16 +172,16 @@ export default function Home() {
 
     // Listen for new memo events.
     if (ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum, 'any');
+      const provider = new ethers.providers.Web3Provider(ethereum, "any");
       const signer = provider.getSigner();
       buyMeAMatcha = new ethers.Contract(contractAddress, contractABI, signer);
 
-      buyMeAMatcha.on('NewMemo', onNewMemo);
+      buyMeAMatcha.on("NewMemo", onNewMemo);
     }
 
     return () => {
       if (buyMeAMatcha) {
-        buyMeAMatcha.off('NewMemo', onNewMemo);
+        buyMeAMatcha.off("NewMemo", onNewMemo);
       }
     };
   }, []);
@@ -244,8 +244,8 @@ export default function Home() {
           </div>
         ) : (
           <button onClick={connectWallet} className={styles.button}>
-            {' '}
-            Connect your wallet{' '}
+            {" "}
+            Connect your wallet{" "}
           </button>
         )}
       </main>
@@ -258,13 +258,17 @@ export default function Home() {
             <div
               key={idx}
               style={{
-                border: '2px solid',
-                borderRadius: '5px',
-                padding: '5px',
-                margin: '5px',
+                border: "2px solid",
+                borderRadius: "5px",
+                padding: "5px",
+                margin: "5px",
               }}
             >
-              <p style={{ fontWeight: 'bold' }}>"{memo.message}"</p>
+              <p style={{ fontWeight: "bold" }}>
+                {'"'}
+                {memo.message}
+                {'"'}
+              </p>
               <p>
                 From: {memo.name} at {memo.timestamp.toString()}
               </p>
@@ -278,7 +282,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Created by @mylenetu for Alchemy's Road to Web3 lesson two!
+          Created by @mylenetu for Alchemy{"'"}s Road to Web3 lesson two!
         </a>
       </footer>
     </div>
