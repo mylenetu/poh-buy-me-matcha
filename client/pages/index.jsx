@@ -13,7 +13,7 @@ import HCaptchaValidator from "poh-validator-hcaptcha-react";
 
 export default function Home() {
   // Contract Address & ABI
-  const contractAddress = "0x14810D97514dfc3cE0BfAbAC4d3FbD649807AEEB";
+  const contractAddress = "0xF6E23c98b6817f1a5622Daa657F2afb61f743B5f";
   const contractABI = abi.abi;
 
   // Component state
