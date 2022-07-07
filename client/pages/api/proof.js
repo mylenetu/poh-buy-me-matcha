@@ -21,10 +21,9 @@ export default async (req, res) => {
     const hash = ethers.utils.keccak256(
       ethers.utils.hexConcat([data, timestamp])
     );
-    console.log("beofre");
 
-    console.log(process.env.VALIDATOR_KEY);
-    const wallet = new ethers.Wallet(process.env.VALIDATOR_KEY);
+    console.log("before");
+    const wallet = new ethers.Wallet(`0x${process.env.VALIDATOR_KEY}`);
     const validatorSignature = await wallet.signMessage(
       ethers.utils.arrayify(hash)
     );
