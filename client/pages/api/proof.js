@@ -25,7 +25,7 @@ export default async (req, res) => {
     console.log("before");
     console.log(process.env.VALIDATOR_KEY);
     const wallet = new ethers.Wallet(process.env.VALIDATOR_KEY);
-    console.log("aftert wallet");
+    console.log("after wallet");
     const validatorSignature = await wallet.signMessage(
       ethers.utils.arrayify(hash)
     );
