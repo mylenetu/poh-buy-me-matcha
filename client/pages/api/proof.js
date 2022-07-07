@@ -15,6 +15,7 @@ export default async (req, res) => {
     }
 
     console.log(1);
+    console.log(ethers);
     const timestamp = ethers.utils.hexZeroPad(
       ethers.utils.hexlify(Math.floor(new Date(challenge_ts).getTime() / 1000)),
       4
