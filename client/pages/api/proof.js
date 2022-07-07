@@ -22,18 +22,12 @@ export default async (req, res) => {
       ethers.utils.hexConcat([data, timestamp])
     );
 
-    console.log("before");
-    console.log(process.env.VALIDATOR_KEY);
     const wallet = new ethers.Wallet(process.env.VALIDATOR_KEY);
-    console.log("after wallet");
     const validatorSignature = await wallet.signMessage(
       ethers.utils.arrayify(hash)
     );
-    console.log("after");
 
-    console.log(1);
     const proof = ethers.utils.hexConcat([data, timestamp, validatorSignature]);
-    console.log(2);
 
     res.status(200).json({ proof, timestamp: challenge_ts });
   } catch (error) {
