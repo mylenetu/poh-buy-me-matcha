@@ -2,7 +2,7 @@
 
 DApp permitting **humans** to buy me a matcha.
 
-**In order to sumbit transaction, the sender must solve a hCaptcha to proof their humanity.**
+**In order to submit transaction, the sender must solve a hCaptcha to proof their humanity.**
 
 ## Live demo
 
